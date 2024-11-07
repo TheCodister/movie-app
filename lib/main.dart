@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sawaco_flutter/components/appbar.dart';
 import 'package:sawaco_flutter/pages/favorite/favorite.dart';
 import 'package:sawaco_flutter/pages/home/home.dart';
 import 'package:sawaco_flutter/pages/search/search.dart';
@@ -47,18 +48,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Movie OMDB',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.blue,
-      ),
+      appBar: const CustomAppBar(), // Display the custom app bar
       body: _pages[_selectedIndex], // Display the selected page
       bottomNavigationBar: BottomNavigationBar(
         items: items,
