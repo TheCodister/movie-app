@@ -61,4 +61,20 @@ class Favorite extends StatelessWidget {
     );
   }
 }
-//
+
+
+// class Favorite extends StatelessWidget {
+//   const Favorite({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text("Favorite Movies"),
+//       ),
+//       body: const Center(
+//         child: Text('No favorite movies found.'),
+//       ),
+//     );
+//   }
+// }
