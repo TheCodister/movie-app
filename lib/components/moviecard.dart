@@ -1,5 +1,5 @@
-// moviecard.dart
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Moviecard extends StatelessWidget {
   final String title;
@@ -13,16 +13,42 @@ class Moviecard extends StatelessWidget {
     required this.posterUrl,
   });
 
+  // Function to save movie to favorites in local storage
+  Future<void> _addToFavorites(BuildContext context) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      List<String> favoriteMovies = prefs.getStringList('favorites') ?? [];
+
+      // Create a movie string from the data
+      String movieData = '$title|$year|$posterUrl';
+
+      // Add the movie data to the list
+      favoriteMovies.add(movieData);
+      // Save the updated list to local storage
+      await prefs.setStringList('favorites', favoriteMovies);
+
+      // Check if the widget is still mounted before showing the SnackBar
+      if (context.mounted) {
+        // Show a snackbar to confirm action
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Added to favorites'),
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: $e'),
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    void onPressed() {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Added to favorite'),
-        ),
-      );
-    }
-
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
@@ -45,7 +71,7 @@ class Moviecard extends StatelessWidget {
             subtitle: Text(year),
           ),
           ElevatedButton(
-            onPressed: onPressed,
+            onPressed: () => _addToFavorites(context),
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromARGB(255, 255, 131, 173),
               shape: RoundedRectangleBorder(
