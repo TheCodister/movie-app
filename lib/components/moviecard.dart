@@ -15,11 +15,20 @@ class Moviecard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void onPressed() {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Added to favorite'),
+        ),
+      );
+    }
+
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
       margin: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+      elevation: 10.0,
       child: Column(
         children: <Widget>[
           Image.network(
@@ -34,6 +43,17 @@ class Moviecard extends StatelessWidget {
                   const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
             ),
             subtitle: Text(year),
+          ),
+          ElevatedButton(
+            onPressed: onPressed,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromARGB(255, 255, 131, 173),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            ),
+            child: const Text('Add to favorite',
+                style: TextStyle(color: Colors.white)),
           ),
         ],
       ),

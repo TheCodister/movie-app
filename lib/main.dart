@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fquery/fquery.dart';
 import 'package:sawaco_flutter/components/appbar.dart';
 import 'package:sawaco_flutter/pages/favorite/favorite.dart';
 import 'package:sawaco_flutter/pages/home/home.dart';
 import 'package:sawaco_flutter/pages/search/search.dart';
+
+final queryClient = QueryClient(
+  defaultQueryOptions: DefaultQueryOptions(),
+);
 
 void main() {
   runApp(const MyApp());
@@ -13,9 +18,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: "Movie OMDB",
-      home: MainScreen(),
+    return QueryClientProvider(
+      queryClient: queryClient,
+      child: const MaterialApp(
+        title: "Movie OMDB",
+        home: MainScreen(),
+        // initialRoute: '/',
+        // routes: {r
+        //   '/': (context) => const Home(),
+        //   '/search': (context) => const Search(),
+        //   '/favorite': (context) => const Favorite(),
+        // },
+      ),
     );
   }
 }
