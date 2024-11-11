@@ -37,6 +37,7 @@ dependencies:
   fquery: ^1.4.0-beta.1
   flutter_hooks: ^0.20.5
   shared_preferences: ^2.3.2
+  rename_app: ^1.6.1
 
 dev_dependencies:
   flutter_test:

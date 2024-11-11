@@ -41,7 +41,30 @@ class Home extends HookWidget {
           if (moviesQuery.isLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (moviesQuery.isError) {
-            return Center(child: Text('Error: ${moviesQuery.error}'));
+            return Center(
+                child: Container(
+              padding: const EdgeInsets.all(16.0),
+              child: Card(
+                elevation: 5.0,
+                child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text('Error loading movies.'),
+                        const SizedBox(height: 10.0),
+                        ElevatedButton(
+                          //onPressed will refresh the application
+                          onPressed: () => moviesQuery.refetch(),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                          ),
+                          child: const Text('Retry'),
+                        ),
+                      ],
+                    )),
+              ),
+            ));
           } else if (moviesQuery.data == null || moviesQuery.data!.isEmpty) {
             return const Center(child: Text('No movies found.'));
           } else {
@@ -53,6 +76,7 @@ class Home extends HookWidget {
                   title: movie['Title'],
                   year: movie['Year'],
                   posterUrl: movie['Poster'],
+                  imdbID: movie['imdbID'],
                 );
               },
             );

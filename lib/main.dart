@@ -3,6 +3,7 @@ import 'package:fquery/fquery.dart';
 import 'package:sawaco_flutter/components/appbar.dart';
 import 'package:sawaco_flutter/pages/favorite/favorite.dart';
 import 'package:sawaco_flutter/pages/home/home.dart';
+import 'package:sawaco_flutter/pages/movie_detail/movie_detail.dart';
 import 'package:sawaco_flutter/pages/search/search.dart';
 
 final queryClient = QueryClient(
@@ -20,15 +21,22 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return QueryClientProvider(
       queryClient: queryClient,
-      child: const MaterialApp(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: "Movie OMDB",
-        home: MainScreen(),
-        // initialRoute: '/',
-        // routes: {r
-        //   '/': (context) => const Home(),
-        //   '/search': (context) => const Search(),
-        //   '/favorite': (context) => const Favorite(),
-        // },
+        home: const MainScreen(),
+        initialRoute: '/',
+        onGenerateRoute: (RouteSettings settings) {
+          if (settings.name != null &&
+              settings.name!.startsWith('/movie_detail/')) {
+            final imdbID = settings.name!.replaceFirst('/movie_detail/', '');
+            return MaterialPageRoute(
+              builder: (context) => MovieDetail(imdbID: imdbID),
+            );
+          }
+          // Define other routes as needed
+          return MaterialPageRoute(builder: (context) => const MainScreen());
+        },
       ),
     );
   }

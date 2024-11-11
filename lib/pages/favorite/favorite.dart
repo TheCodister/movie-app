@@ -7,25 +7,18 @@ class Favorite extends StatelessWidget {
 
   // Function to load the favorite movies from local storage
   Future<List<Map<String, String>>> _loadFavorites() async {
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      List<String> favoriteMovies = prefs.getStringList('favorites') ?? [];
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> favoriteMovies = prefs.getStringList('favorites') ?? [];
 
-      List<Map<String, String>> movies = [];
-      for (var movie in favoriteMovies) {
-        var movieData = movie.split('|');
-        if (movieData.length == 3) {
-          movies.add({
-            'title': movieData[0],
-            'year': movieData[1],
-            'posterUrl': movieData[2],
-          });
-        }
-      }
-      return movies;
-    } catch (e) {
-      throw Exception('Error loading favorites: $e');
-    }
+    return favoriteMovies.map((movie) {
+      var movieData = movie.split('|');
+      return {
+        'title': movieData[0],
+        'year': movieData[1],
+        'posterUrl': movieData[2],
+        'imdbID': movieData[3],
+      };
+    }).toList();
   }
 
   @override
@@ -53,6 +46,7 @@ class Favorite extends StatelessWidget {
                 title: movie['title']!,
                 year: movie['year']!,
                 posterUrl: movie['posterUrl']!,
+                imdbID: movie['imdbID']!,
               );
             },
           );

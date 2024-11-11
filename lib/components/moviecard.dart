@@ -1,56 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sawaco_flutter/utils/addtofavorite.dart';
 
 class Moviecard extends StatelessWidget {
   final String title;
   final String year;
   final String posterUrl;
+  final String imdbID;
 
   const Moviecard({
     super.key,
     required this.title,
     required this.year,
     required this.posterUrl,
+    required this.imdbID,
   });
 
   // Function to save movie to favorites in local storage
-  Future<void> _addToFavorites(BuildContext context) async {
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      List<String> favoriteMovies = prefs.getStringList('favorites') ?? [];
-
-      // Create a movie string from the data
-      String movieData = '$title|$year|$posterUrl';
-
-      // Add the movie data to the list
-      favoriteMovies.add(movieData);
-      // Save the updated list to local storage
-      await prefs.setStringList('favorites', favoriteMovies);
-
-      // Check if the widget is still mounted before showing the SnackBar
-      if (context.mounted) {
-        // Show a snackbar to confirm action
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Added to favorites'),
-          ),
-        );
-      }
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error: $e'),
-          ),
-        );
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(5.0),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
@@ -78,16 +47,41 @@ class Moviecard extends StatelessWidget {
               ),
               subtitle: Text(year),
             ),
-            ElevatedButton(
-              onPressed: () => _addToFavorites(context),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 255, 131, 173),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ElevatedButton(
+                  onPressed: () => FavoritesUtils.addToFavorites(
+                      context, title, year, posterUrl, imdbID),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(200, 40),
+                    backgroundColor: const Color.fromARGB(255, 255, 131, 173),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+                  child: const Text('Add to favorite',
+                      style: TextStyle(color: Colors.white, fontSize: 12.0)),
                 ),
-              ),
-              child: const Text('Add to favorite',
-                  style: TextStyle(color: Colors.white)),
+                const SizedBox(width: 10.0),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/movie_detail/${imdbID}', // Use the dynamic route with the imdbID
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(200, 40),
+                    backgroundColor: const Color.fromARGB(255, 238, 49, 49),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+                  child: const Text('View Details',
+                      style: TextStyle(color: Colors.white, fontSize: 12.0)),
+                ),
+              ],
             ),
             const SizedBox(height: 10.0),
           ],

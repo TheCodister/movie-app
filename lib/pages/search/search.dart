@@ -82,6 +82,13 @@ class Search extends HookWidget {
                   itemBuilder: (context, index) {
                     final movie = searchQuery.data![index];
                     return ListTile(
+                      onTap: () {
+                        // Navigate to movie details page
+                        Navigator.pushNamed(
+                          context,
+                          '/movie_detail/${movie['imdbID']}', // Use the dynamic route with the imdbID
+                        );
+                      },
                       leading: Image.network(
                         movie['Poster'] ?? '',
                         width: 50,
