@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fquery/fquery.dart';
 import 'package:sawaco_flutter/components/appbar.dart';
+import 'package:sawaco_flutter/pages/display_map/display_map.dart';
 import 'package:sawaco_flutter/pages/favorite/favorite.dart';
 import 'package:sawaco_flutter/pages/home/home.dart';
 import 'package:sawaco_flutter/pages/movie_detail/movie_detail.dart';
@@ -58,6 +59,7 @@ class _MainScreenState extends State<MainScreen> {
     const Home(),
     const Search(),
     const Favorite(),
+    const DisplayMap(),
   ];
 
   // Method to handle bottom navigation item taps
@@ -98,5 +100,9 @@ final List<BottomNavigationBarItem> items = [
   const BottomNavigationBarItem(
     icon: Icon(Icons.favorite),
     label: 'Favorite',
+  ),
+  const BottomNavigationBarItem(
+    icon: Icon(Icons.map),
+    label: 'Map',
   ),
 ];

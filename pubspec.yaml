@@ -38,6 +38,8 @@ dependencies:
   flutter_hooks: ^0.20.5
   shared_preferences: ^2.3.2
   rename_app: ^1.6.1
+  arcgis_maps: ^200.6.0+4426
+  flutter_web_auth: ^0.6.0
 
 dev_dependencies:
   flutter_test:
