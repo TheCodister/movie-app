@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fquery/fquery.dart';
 import 'package:sawaco_flutter/components/appbar.dart';
+// import 'package:sawaco_flutter/pages/display_map/display_map.dart';
 import 'package:sawaco_flutter/pages/display_map/display_map.dart';
 import 'package:sawaco_flutter/pages/favorite/favorite.dart';
 import 'package:sawaco_flutter/pages/home/home.dart';
@@ -59,7 +60,7 @@ class _MainScreenState extends State<MainScreen> {
     const Home(),
     const Search(),
     const Favorite(),
-    const DisplayMap(),
+    const AuthenticateWithOAuth(),
   ];
 
   // Method to handle bottom navigation item taps
