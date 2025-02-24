@@ -1,4 +1,4 @@
-# sawaco_flutter
+# Movie Searching App
 
 A new Flutter project.
 
